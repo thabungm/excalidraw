@@ -271,3 +271,35 @@ describe("Instagram embedding", () => {
     }
   });
 });
+
+describe("YouTube mobile links", () => {
+  it.each([
+    {
+      url: "https://m.youtube.com/watch?v=dQw4w9WgXcQ",
+      expectedLink: "https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1",
+      expectedSize: { w: 560, h: 315 },
+    },
+    {
+      url: "https://m.youtube.com/watch?v=dQw4w9WgXcQ&t=90",
+      expectedLink:
+        "https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1&start=90",
+      expectedSize: { w: 560, h: 315 },
+    },
+    {
+      url: "https://m.youtube.com/shorts/dQw4w9WgXcQ",
+      expectedLink: "https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1",
+      expectedSize: { w: 315, h: 560 },
+    },
+  ])(
+    "should embed m.youtube.com link: $url",
+    ({ url, expectedLink, expectedSize }) => {
+      expect(embeddableURLValidator(url, undefined)).toBe(true);
+      const result = getEmbedLink(url);
+      expect(result?.type).toBe("video");
+      if (result?.type === "video") {
+        expect(result.link).toBe(expectedLink);
+      }
+      expect(result?.intrinsicSize).toEqual(expectedSize);
+    },
+  );
+});
