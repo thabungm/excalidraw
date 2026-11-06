@@ -24,7 +24,7 @@ type IframeDataWithSandbox = MarkRequired<IframeData, "sandbox">;
 const embeddedLinkCache = new Map<string, IframeDataWithSandbox>();
 
 const RE_YOUTUBE =
-  /^(?:http(?:s)?:\/\/)?(?:www\.)?youtu(?:be\.com|\.be)\/(embed\/|watch\?v=|shorts\/|live\/|playlist\?list=|embed\/videoseries\?list=)?([a-zA-Z0-9_-]+)/;
+  /^(?:http(?:s)?:\/\/)?(?:www\.|m\.)?youtu(?:be\.com|\.be)\/(embed\/|watch\?v=|shorts\/|live\/|playlist\?list=|embed\/videoseries\?list=)?([a-zA-Z0-9_-]+)/;
 
 const RE_VIMEO =
   /^(?:http(?:s)?:\/\/)?(?:(?:w){3}\.)?(?:player\.)?vimeo\.com\/(?:video\/)?([^?\s]+)(?:\?.*)?$/;
@@ -139,6 +139,7 @@ const parseGoogleDriveVideoLink = (
 const ALLOWED_DOMAINS = new Set([
   "youtube.com",
   "youtu.be",
+  "m.youtube.com",
   "vimeo.com",
   "player.vimeo.com",
   "drive.google.com",
@@ -159,6 +160,7 @@ const ALLOWED_DOMAINS = new Set([
 const ALLOW_SAME_ORIGIN = new Set([
   "youtube.com",
   "youtu.be",
+  "m.youtube.com",
   "vimeo.com",
   "player.vimeo.com",
   "drive.google.com",
